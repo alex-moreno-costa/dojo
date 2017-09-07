@@ -1,3 +1,4 @@
+import { ApiService } from './api.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  listCharacters = this._service.list();
+  constructor(private _service: ApiService) {
+  }
+
 }
