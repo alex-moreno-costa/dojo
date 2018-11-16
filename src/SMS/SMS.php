@@ -29,7 +29,7 @@ class SMS
     /**
      * @var null
      */
-    private $previouslyNumber = null;
+    private $previousNumber = null;
 
     /**
      * @var int
@@ -48,12 +48,12 @@ class SMS
                 continue;
             }
 
-            if (is_null($this->previouslyNumber)) {
+            if (is_null($this->previousNumber)) {
                 $this->setLetter($string[$i]);
                 continue;
             }
 
-            if ($this->previouslyNumber === $string[$i]) {
+            if ($this->previousNumber === $string[$i]) {
                 $this->quantity++;
                 $this->setLetter($string[$i], true);
                 continue;
@@ -70,7 +70,7 @@ class SMS
     {
         $this->pointer++;
         $this->quantity = 0;
-        $this->previouslyNumber = null;
+        $this->previousNumber = null;
     }
 
     /**
@@ -80,7 +80,7 @@ class SMS
     private function setLetter(string $number, bool $replace = false): void
     {
         $letters = $this->keyboard[$number];
-        $this->previouslyNumber = $number;
+        $this->previousNumber = $number;
 
         if ($replace) {
             $this->output[$this->pointer] = $letters[$this->quantity];
