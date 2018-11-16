@@ -16,46 +16,76 @@ class SMS
         0 => ' ',
     ];
 
+    /**
+     * @var int
+     */
     private $pointer = 0;
+
+    /**
+     * @var string
+     */
     private $output = '';
+
+    /**
+     * @var null
+     */
     private $prevourslyNumber = null;
+
+    /**
+     * @var int
+     */
     private $quantity = 0;
 
-    public function process(string $string)
+    /**
+     * @param string $string
+     * @return string
+     */
+    public function process(string $string): string
     {
         for ($i = 0; $i < strlen($string); $i++) {
             if ('_' === $string[$i]) {
-                $this->pointer++;
-                $this->quantity = 0;
-                $this->prevourslyNumber = null;
+                $this->resetVariables();
                 continue;
             }
 
             if (is_null($this->prevourslyNumber)) {
-                $number = $string[$i];
-                $letters = $this->keyboard[$number];
-                $this->output .= $letters[$this->quantity];
-                $this->prevourslyNumber = $string[$i];
+                $this->setLetter($string[$i]);
                 continue;
             }
 
             if ($this->prevourslyNumber === $string[$i]) {
                 $this->quantity++;
-                $number = $string[$i];
-                $letters = $this->keyboard[$number];
-                $this->output[$this->pointer] = $letters[$this->quantity];
-                $this->prevourslyNumber = $string[$i];
+                $this->setLetter($string[$i], true);
                 continue;
             }
 
-            $this->pointer++;
-            $this->quantity = 0;
-            $number = $string[$i];
-            $letters = $this->keyboard[$number];
-            $this->output .= $letters[$this->quantity];
-            $this->prevourslyNumber = $string[$i];
+            $this->resetVariables();
+            $this->setLetter($string[$i]);
         }
 
         return $this->output;
+    }
+
+    private function resetVariables(): void
+    {
+        $this->pointer++;
+        $this->quantity = 0;
+        $this->prevourslyNumber = null;
+    }
+
+    /**
+     * @param string $number
+     * @param bool $replace
+     */
+    private function setLetter(string $number, bool $replace = false): void
+    {
+        $letters = $this->keyboard[$number];
+        $this->prevourslyNumber = $number;
+
+        if ($replace) {
+            $this->output[$this->pointer] = $letters[$this->quantity];
+        } else {
+            $this->output .= $letters[$this->quantity];
+        }
     }
 }
