@@ -55,7 +55,7 @@ class SMS
 
             if ($this->previousNumber === $string[$i]) {
                 $this->quantity++;
-                $this->setLetter($string[$i], true);
+                $this->setLetter($string[$i]);
                 continue;
             }
 
@@ -75,9 +75,8 @@ class SMS
 
     /**
      * @param string $number
-     * @param bool $replace
      */
-    private function setLetter(string $number, bool $replace = false): void
+    private function setLetter(string $number): void
     {
         $letters = $this->keyboard[$number];
         $this->previousNumber = $number;
