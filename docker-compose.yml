@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  php:
+    image: "nanoninja/php-fpm:7.2"
+    container_name: "amcosta-dojo"
+    volumes:
+      - ".:/var/www/html"
