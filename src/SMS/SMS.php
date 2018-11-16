@@ -81,11 +81,6 @@ class SMS
     {
         $letters = $this->keyboard[$number];
         $this->previousNumber = $number;
-
-        if ($replace) {
-            $this->output[$this->pointer] = $letters[$this->quantity];
-        } else {
-            $this->output .= $letters[$this->quantity];
-        }
+        $this->output[$this->pointer] = $letters[$this->quantity];
     }
 }
