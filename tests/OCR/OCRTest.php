@@ -116,4 +116,66 @@ class OCRTest extends TestCase
             ""
         ]));
     }
+
+    public function testIdentifyNumberTen()
+    {
+        $this->assertEquals([
+            [
+                "   ",
+                "  |",
+                "  |",
+                ""
+            ]
+        ], $this->ocr->splitNumbers([
+            "   ",
+            "  |",
+            "  |",
+            ""
+        ]));
+    }
+
+    public function testProcessLine()
+    {
+        $this->assertEquals(10, $this->ocr->processLine([
+            [
+                "   ",
+                "  |",
+                "  |",
+                ""
+            ],
+            [
+                " _ ",
+                "| |",
+                "|_|",
+                ""
+            ]
+        ]));
+
+        $this->assertEquals(1082, $this->ocr->processLine([
+            [
+                "   ",
+                "  |",
+                "  |",
+                ""
+            ],
+            [
+                " _ ",
+                "| |",
+                "|_|",
+                ""
+            ],
+            [
+                " _ ",
+                "|_|",
+                "|_|",
+                ""
+            ],
+            [
+                " _ ",
+                " _|",
+                "|_ ",
+                ""
+            ]
+        ]));
+    }
 }
