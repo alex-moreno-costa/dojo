@@ -2,11 +2,10 @@
 
 namespace Dojo\OCR;
 
-use phpDocumentor\Reflection\Types\Integer;
-
 class OCR
 {
     private $numberMap = [
+        0 => ' _ | ||_|',
         1 => '     |  |',
         2 => ' _  _||_ ',
         3 => ' _  _| _|',

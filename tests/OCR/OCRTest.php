@@ -106,4 +106,14 @@ class OCRTest extends TestCase
             ""
         ]));
     }
+
+    public function testIdentifyNumberZero()
+    {
+        $this->assertEquals(0, $this->ocr->identifyNumber([
+            " _ ",
+            "| |",
+            "|_|",
+            ""
+        ]));
+    }
 }
