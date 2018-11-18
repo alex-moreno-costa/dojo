@@ -36,27 +36,20 @@ class OCR
     {
         $numbers = [];
         $pointer = 0;
-        $lineLimit = 0;
         $item = 0;
 
-        foreach ($content as $row) {
-            $lineLimit = strlen($row) - 1;
+        foreach ($content as $line => $row) {
+            $rowLimit = strlen($row);
+            $caracters = $rowLimit / 3;
 
-            if ($lineLimit <= 0 || $pointer === $lineLimit) {
-                $pointer = 0;
-                $lineLimit = 0;
-                $item = 0;
-
-                if ($lineLimit > 0) {
-                    $this->processLine($numbers);
-                }
-                continue;
+            for ($i = 1; $i <= $caracters; $i++) {
+                $numbers[$item][] = substr($row, $pointer, 3);
+                $pointer += 3;
+                $item++;
             }
 
-            $lineLimit = strlen($row) - 1;
-            $numbers[$item][] = substr($row, $pointer, 3);
-            $pointer += 3;
-            $item++;
+            $pointer = 0;
+            $item = 0;
         }
 
         return $numbers;

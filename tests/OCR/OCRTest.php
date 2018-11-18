@@ -119,19 +119,32 @@ class OCRTest extends TestCase
 
     public function testIdentifyNumberTen()
     {
-        $this->assertEquals([
-            [
-                "   ",
-                "  |",
-                "  |",
-                ""
-            ]
-        ], $this->ocr->splitNumbers([
+        $actual = $this->ocr->splitNumbers([
             "   ",
             "  |",
             "  |",
             ""
-        ]));
+        ]);
+
+        $this->assertCount(1, $actual);
+        $this->assertEquals('   ', $actual[0][0]);
+        $this->assertEquals('  |', $actual[0][1]);
+        $this->assertEquals('  |', $actual[0][2]);
+        $this->assertEquals('', $actual[0][3]);
+
+
+        $actual = $this->ocr->splitNumbers([
+            "    _ ",
+            "  || |",
+            "  ||_|",
+            ""
+        ]);
+
+        $this->assertCount(2, $actual);
+        $this->assertEquals(' _ ', $actual[1][0]);
+        $this->assertEquals('| |', $actual[1][1]);
+        $this->assertEquals('|_|', $actual[1][2]);
+        $this->assertEquals('', $actual[1][3]);
     }
 
     public function testProcessLine()
